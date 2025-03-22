@@ -27,7 +27,7 @@ This tutorial outlines the implementation of on-premises Active Directory within
 <img width="950" alt="Image" src="https://github.com/user-attachments/assets/4f8a5b79-7078-4373-9226-472cac2b9987" />"/>
 </p>
 <p>
-We will create two virtual machines: one running Windows Server 2022, named DC-1, and the other running Windows 10, named Client1. Both VMs should be connected to the same virtual network (VNet). Next, we'll configure the IP address on the domain controller (DC-1), changing it from dynamic to static. This ensures the client machine can join the domain and use DC-1 as its DNS server.
+First, we will create two virtual machines: DC-1, which will run Windows Server 2022, and Client1, which will run Windows 10.  It is required that both virtual machines be linked to the same virtual network (VNet).  The domain controller's (DC-1) IP address will then be configured, moving from dynamic to static.  This guarantees that the client computer can use DC-1 as its DNS server and join the domain.
 </p>
 <br />
 
@@ -35,7 +35,7 @@ We will create two virtual machines: one running Windows Server 2022, named DC-1
 <img src="https://github.com/user-attachments/assets/95b405bb-18f7-41b9-a56d-a7d94f99f89e"/>
 </p>
 <p>
-Next, we'll RDP into the domain controller and disable the firewall for the domain, private, and public profiles. To do this, right-click the Windows symbol, select "Run," and type wf.msc. In the Windows Defender Firewall window, ensure the firewall is turned off for all profiles.
+The domain, private, and public profiles' firewalls will then be disabled after we log in via RDP to the domain controller.  Right-click the Windows symbol, choose "Run," and then type wf.msc to accomplish this.  Make sure the firewall is disabled for every profile in the Windows Defender Firewall window.
 </p>
 <br />
 
@@ -43,7 +43,7 @@ Next, we'll RDP into the domain controller and disable the firewall for the doma
 <img src="https://github.com/user-attachments/assets/1c9f51d9-6d7f-49bf-8f58-ce9700c1e0c1"/>
 </p>
 <p>
-Next, we'll change the DNS server on Client1 to the static private IP address of DC-1 in the networking settings within the Azure portal. After making this change, restart the virtual machines to apply the new DNS configuration.
+Next, in the Azure portal's networking settings, we'll switch Client 1's DNS server to DC-1's static private IP address.  To implement the updated DNS configuration, restart the virtual machines after making this modification.
 </p>
 <br />
 
@@ -52,7 +52,7 @@ Next, we'll change the DNS server on Client1 to the static private IP address of
 <img src="https://github.com/user-attachments/assets/ef474797-682d-4068-a5fd-3f467233cb9e"/>
 </p>
 <p>
-Following that, we'll RDP into the Client1 virtual machine and attempt to ping DC-1's IP address using PowerShell. This should be successful since we disabled DC-1's firewall, allowing the machine to respond to the ping. We'll use the ipconfig /all command on Client1 to confirm that DC-1 is configured as the DNS server for the virtual machine.
+After that, we'll use PowerShell to try to ping DC-1's IP address after logging in via RDP to the Client1 virtual machine.  Since we turned off DC-1's firewall, the computer should be able to respond to the ping, so this should work.  To verify that DC-1 is set up as the virtual machine's DNS server, we'll use Client 1's ipconfig /all command.
 </p>
 <br />
 
