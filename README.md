@@ -12,6 +12,7 @@ This tutorial outlines the implementation of on-premises Active Directory within
 - Remote Desktop
 - Active Directory Domain Services
 - PowerShell
+- Command Prompt 
 
 <h2>Operating Systems Used </h2>
 
@@ -56,23 +57,29 @@ Following that, we'll RDP into the Client1 virtual machine and attempt to ping D
 <br />
 
 <p>
-<img src="https://i.imgur.com/oBYt50h.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://github.com/user-attachments/assets/898c419a-2778-4949-9826-c977efd6fda7"/>
 </p>
 <p>
-Next, we'll install Active Directory Domain Services (AD DS) using the Server Manager on the domain controller.
-</p>
-<br />
-
-<p>
-<img src="https://i.imgur.com/1UY0lrq.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-We'll promote DC-1 to a Domain Controller and set up a new forest with the domain name mydomain.com.
+Next, we'll use the domain controller's Server Manager to install Active Directory Domain Services (AD DS).
 </p>
 <br />
 
 <p>
-<img src="https://i.imgur.com/lRyBbvA.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://github.com/user-attachments/assets/3703e78e-c4e0-4713-b5b2-a0f4873e8121"/>
+  </p>
+<p>
+<img src="https://github.com/user-attachments/assets/12b95c24-6788-4358-9786-dc579691cd96"/>
+
+</p>
+<p>
+A new forest will be created with the domain name mydomain.com, and DC-1 will be promoted to a Domain Controller.
+</p>
+<br />
+
+<p>
+<img src="https://github.com/user-attachments/assets/c1c152c0-e3da-4e97-844b-a6ebe3d36aae"/>
+</p>
+<img src="https://github.com/user-attachments/assets/1997441d-ab78-42b2-80db-0d09c54df25f"/>
 </p>
 <p>
 Next, we'll open Active Directory Users and Computers and create two organizational units, _EMPLOYEES and _ADMINS, by right-clicking mydomain.com, selecting New, and then choosing Organizational Unit.
@@ -80,73 +87,82 @@ Next, we'll open Active Directory Users and Computers and create two organizatio
 <br />
 
 <p>
-<img src="https://i.imgur.com/lj5a6an.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://github.com/user-attachments/assets/8df4b224-a626-4422-b834-97e27d5b64aa"/>
 </p>
 <p>
-In the Admins OU, we'll create a new user named Ken Doe with the username ken_admin. 
-</p>
-<br />
-
-<p>
-<img src="https://i.imgur.com/lHZsq7U.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-Next, we'll add Ken Doe as a Domain Admin. Right-click the user, select Properties, navigate to the Member Of tab, and click Add. In the "Enter object names" field, type Domain Admins and press Enter to complete the process.
+In the Admins OU, we'll create a new user named Ken Doe with the username jane_admin. 
 </p>
 <br />
 
 <p>
-<img src="https://i.imgur.com/x1tbaQ1.png height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://github.com/user-attachments/assets/023fcd41-4a53-4215-acf3-d00396d16cf4"/>
 </p>
+  
 <p>
-Now, log out of DC-1 and reconnect using RDP with the credentials mydomain.com\ken_admin and the assigned password. This account will be used for all future logins to DC-1.
-</p>
-<br />
-
-<p>
-<img src="https://i.imgur.com/sWL89qz.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-Now, we'll join the domain from the Client1 VM. RDP into the system, right-click the Windows logo, select System, then click Rename this PC (Advanced). Next, click Change, select Domain, and enter the domain name mydomain.com. The VM will restart to apply the changes.
+Jane Doe will then be added as a Domain Administrator.  Click Add after right-clicking the user, choosing Properties, and then selecting the Member Of tab.  To finish, type Domain Admins in the "Enter object names" field and hit Enter.
 </p>
 <br />
 
 <p>
-<img src="https://i.imgur.com/wsOjP9T.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+
+<img src="https://github.com/user-attachments/assets/c2f6550e-8f59-490d-aa26-e13764b7d8c8"/> 
 </p>
 <p>
-Go back to DC-1 and open Active Directory Users and Computers. Create another organizational unit named _CLIENTS under mydomain.com.
+Now, exit DC-1 and re-enter via RDP using the given password and the credentials mydomain.com\jane_admin.  All upcoming DC-1 logins will be made using this account.
 </p>
 <br />
 
 <p>
-<img src="https://i.imgur.com/HgTs346.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+
+<img src="https://github.com/user-attachments/assets/b861b8af-ac6d-4376-a473-e4f9f6f327f0"/> 
 </p>
 <p>
-Next, log into the Client1 VM as ken_admin. Right-click the Windows logo, select System, then choose Remote Desktop. Click Select users that can remotely access this PC and add Domain Users to allow them RDP access to the VM.
+We will now join the domain from the Client1 virtual machine.  Right-click the Windows logo, choose System, and then click Rename this PC (Advanced) after logging in via RDP.  After that, click Change, select Domain, and type mydomain.com as the domain name.  To implement the changes, the virtual machine will restart.
 </p>
 <br />
 
 <p>
-<img src="https://i.imgur.com/DoCgqOP.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+  
+
+<img src="https://github.com/user-attachments/assets/f7ef8598-679a-4894-957d-698bcdeff1f2"/> 
 </p>
 <p>
-https://github.com/joshmadakor1/AD_PS/blob/master/Generate-Names-Create-Users.ps1 Log in to DC-1 as ken_admin and open PowerShell ISE as an administrator. Create a new file, paste the script into it, and execute it. Observe as the accounts are created automatically.
+Return to DC-1 and launch Users and Computers in Active Directory.  Under mydomain.com, create a new organizational unit called _CLIENTS.  Next, by dragging the client-1 computer over with the mouse, we will add it to the _CLIENTS folder in the computers section. 
 </p>
 <br />
 
 <p>
-<img src="https://i.imgur.com/Ca3ShWL.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+
+<img src="https://github.com/user-attachments/assets/5d981cd5-d20c-47b3-8fe2-b5ddf1a0ad4d"/> 
 </p>
 <p>
-After running the script, open Active Directory Users and Computers (ADUC) and verify that the accounts have been created in the appropriate _EMPLOYEES organizational unit.
+Afterwards, log in as jane_admin to the Client1 virtual machine. Navigate t o Remote Desktop, right-click the Windows logo, select System, and then select Remote Desktop.  To grant Domain Users RDP access to the virtual machine, click Select Users who can access this PC remotely.
 </p>
 <br />
 
 <p>
-<img src="https://i.imgur.com/PWd6tW8.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+
+<img src="https://github.com/user-attachments/assets/486b990a-c025-4e8e-b0bf-1f7d9bd14d13"/> 
 </p>
 <p>
-Lastly, log in to the Client1 VM using one of the user accounts created by the PowerShell script, with the username and default password Password1. After logging in, open PowerShell to verify that you are logged in as one of the script-created users.
+Next, we need to open PowerShell ISE as an administrator and log in to DC-1 as jane_admin.  To create thousands of new user accounts, we'll utilize a script.  'https://github.com/joshmadakor1/AD_PS/blob/master/Generate-Names-Create-Users.ps1' is the location of this script.  In order to run the script we must first create a new file, paste the script into it, and execute it. We can now  observe as the accounts are generated on their own. 
+</p>
+<br />
+
+<p>
+<img src="https://github.com/user-attachments/assets/9647a5e3-d7ef-48f8-92c7-24aca5eec72d"/>
+</p>
+<p>
+Upon executing the script, access Active Directory Users and Computers (ADUC) to confirm that the accounts have been established within the designated _EMPLOYEES organizational unit.
+</p>
+<br />
+
+<p>
+  <img src="https://github.com/user-attachments/assets/e86494bb-beb6-412c-a7eb-4b3851ec9af0"/> 
+</p>
+<img src="https://github.com/user-attachments/assets/255abd83-2bfe-4628-9558-6a4b3574b46a"/>
+</p>
+<p>
+Finally, we will access the Client1 VM utilizing one of the user accounts established by the PowerShell script, employing the username and the default password "Password1". Upon logging in, launch Command Prompt to confirm that we are authenticated as one of the users generated by the script. 
 </p>
 <br />
