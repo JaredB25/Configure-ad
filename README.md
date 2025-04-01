@@ -90,7 +90,7 @@ Next, we'll open Active Directory Users and Computers and create two organizatio
 <img src="https://github.com/user-attachments/assets/8df4b224-a626-4422-b834-97e27d5b64aa"/>
 </p>
 <p>
-In the Admins OU, we'll create a new user named Ken Doe with the username jane_admin. 
+In the Admins OU, we'll create a new user named Jane Doe with the username jane_admin. 
 </p>
 <br />
 
